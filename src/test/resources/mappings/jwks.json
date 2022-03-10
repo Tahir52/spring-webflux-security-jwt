@@ -1,0 +1,13 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/"
+  },
+  "response": {
+    "status": 200,
+    "body": "{\"keys\":[{\"kty\":\"RSA\",\"e\":\"AQAB\",\"use\":\"sig\",\"kid\":\"0b3c6141-7b2a-4b0b-a997-284e1b25f0e9\",\"alg\":\"RS256\",\"n\":\"orBEJ597yoLHUhyealAAn0dt0FtwO-Zs0oB5kldOYFBwGBPJN0CALru4ojJac7AP6Za60o7metGOn4ljvDyX2Q\"}]}",
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}
