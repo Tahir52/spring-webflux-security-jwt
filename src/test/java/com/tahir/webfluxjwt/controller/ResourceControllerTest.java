@@ -67,4 +67,14 @@ class ResourceControllerTest {
                 .expectStatus().is2xxSuccessful()
                 .expectBody().jsonPath("$.message").isEqualTo("Hello user 1");
     }
+
+    @Test
+    void getPrivateResource_withJwtAuthentication_withoutValidRole_shouldBeUnauthorized() {
+        webTestClient.get()
+                .uri("/private/uberRoleResource")
+                .header(HttpHeaders.AUTHORIZATION, VALID_JWT)
+                .exchange()
+                .expectStatus().isEqualTo(HttpStatus.UNAUTHORIZED)
+                .expectBody().isEmpty();
+    }
 }
