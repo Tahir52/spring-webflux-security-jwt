@@ -7,6 +7,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.context.event.annotation.AfterTestClass;
 import org.springframework.test.context.event.annotation.BeforeTestClass;
@@ -18,6 +19,8 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
 class ResourceControllerTest {
+
+    private static final String VALID_JWT = "Bearer eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiIxIiwiZXhwIjo5MjIzMzcyMDM2ODU0Nzc1LCJpYXQiOjAsImVtYWlsIjoidGVzdEBlbWFpbC5jb20iLCJhdXRob3JpdGllcyI6WyJSZWFkIiwiV3JpdGUiLCJST0xFX1N1cGVyIiwiRXh0cmEiXX0.ZVw-pQLx8krJLuMwvueOOep31nCGUft0jZnlB8i46C57-b8P6Gbl1OcECxRgYnmRk8kdHzGWYZoPyUDMmupjcA";
 
     @Autowired
     WebTestClient webTestClient;
@@ -54,5 +57,15 @@ class ResourceControllerTest {
                 .exchange()
                 .expectStatus().isEqualTo(HttpStatus.UNAUTHORIZED)
                 .expectBody().isEmpty();
+    }
+
+    @Test
+    void getPrivateResource_withJwtAuthentication_shouldReturnResult() {
+        webTestClient.get()
+                .uri("/private/resource")
+                .header(HttpHeaders.AUTHORIZATION, VALID_JWT)
+                .exchange()
+                .expectStatus().is2xxSuccessful()
+                .expectBody().jsonPath("$").exists();
     }
 }
