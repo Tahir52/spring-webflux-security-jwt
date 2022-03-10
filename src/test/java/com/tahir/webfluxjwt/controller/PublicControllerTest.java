@@ -39,6 +39,10 @@ class PublicControllerTest {
 
     @Test
     void getResource() {
-
+        webTestClient.get()
+                .uri("/public/resource")
+                .exchange()
+                .expectStatus().is2xxSuccessful()
+                .expectBody().jsonPath("$.message").isEqualTo("Hello World");
     }
 }
