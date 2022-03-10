@@ -16,7 +16,7 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 @AutoConfigureWebTestClient
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
-class PublicControllerTest {
+class ResourceControllerTest {
 
     @Autowired
     WebTestClient webTestClient;
@@ -38,7 +38,7 @@ class PublicControllerTest {
     }
 
     @Test
-    void getResource() {
+    void getPublicResource() {
         webTestClient.get()
                 .uri("/public/resource")
                 .exchange()
