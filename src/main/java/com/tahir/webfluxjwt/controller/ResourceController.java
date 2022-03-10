@@ -13,4 +13,9 @@ public class ResourceController {
     public Map<String, Object> hello() {
         return Map.of("message", "Hello World");
     }
+
+    @GetMapping("/private/resource")
+    public Map<String, Object> helloPrivate() {
+        return Map.of("message", "Hello private");
+    }
 }
