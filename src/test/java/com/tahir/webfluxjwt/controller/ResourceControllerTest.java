@@ -7,6 +7,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpStatus;
 import org.springframework.test.context.event.annotation.AfterTestClass;
 import org.springframework.test.context.event.annotation.BeforeTestClass;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -44,5 +45,14 @@ class ResourceControllerTest {
                 .exchange()
                 .expectStatus().is2xxSuccessful()
                 .expectBody().jsonPath("$.message").isEqualTo("Hello World");
+    }
+
+    @Test
+    void getPrivateResource_withoutAuthentication_shouldBeUnauthorized() {
+        webTestClient.get()
+                .uri("/private/resource")
+                .exchange()
+                .expectStatus().isEqualTo(HttpStatus.UNAUTHORIZED)
+                .expectBody().isEmpty();
     }
 }
