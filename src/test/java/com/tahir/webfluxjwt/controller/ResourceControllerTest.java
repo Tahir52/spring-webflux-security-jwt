@@ -11,8 +11,11 @@ import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWeb
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.reactive.server.WebTestClient;
+
+import static org.springframework.security.test.web.reactive.server.SecurityMockServerConfigurers.mockJwt;
 
 
 @AutoConfigureWebTestClient
@@ -76,5 +79,16 @@ class ResourceControllerTest {
                 .exchange()
                 .expectStatus().isEqualTo(HttpStatus.FORBIDDEN)
                 .expectBody().isEmpty();
+    }
+
+    @Test
+    void getPrivateResource_withJwtAuthentication_withValidRole_shouldReturnResult() {
+        webTestClient
+                .mutateWith(mockJwt().authorities(new SimpleGrantedAuthority("ROLE_Uber")))
+                .get()
+                .uri("/private/uberRoleResource")
+                .exchange()
+                .expectStatus().is2xxSuccessful()
+                .expectBody().jsonPath("$.message").isEqualTo("Hello Uber user user");
     }
 }

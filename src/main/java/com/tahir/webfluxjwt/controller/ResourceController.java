@@ -28,6 +28,6 @@ public class ResourceController {
     @PreAuthorize("hasRole('Uber')")
     @GetMapping("/private/uberRoleResource")
     public Mono<Map<String, Object>> helloUber(@AuthenticationPrincipal Principal principal) {
-        return just(Map.of("message", "Hello uber user " + principal.getName()));
+        return just(Map.of("message", "Hello Uber user " + principal.getName()));
     }
 }
