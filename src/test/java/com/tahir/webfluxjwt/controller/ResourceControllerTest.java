@@ -65,6 +65,6 @@ class ResourceControllerTest {
                 .header(HttpHeaders.AUTHORIZATION, VALID_JWT)
                 .exchange()
                 .expectStatus().is2xxSuccessful()
-                .expectBody().jsonPath("$").exists();
+                .expectBody().jsonPath("$.message").isEqualTo("Hello user 1");
     }
 }
