@@ -74,7 +74,7 @@ class ResourceControllerTest {
                 .uri("/private/uberRoleResource")
                 .header(HttpHeaders.AUTHORIZATION, VALID_JWT)
                 .exchange()
-                .expectStatus().isEqualTo(HttpStatus.UNAUTHORIZED)
+                .expectStatus().isEqualTo(HttpStatus.FORBIDDEN)
                 .expectBody().isEmpty();
     }
 }
